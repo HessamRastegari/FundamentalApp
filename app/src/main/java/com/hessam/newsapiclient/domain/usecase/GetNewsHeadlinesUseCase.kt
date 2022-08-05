@@ -7,7 +7,7 @@ import com.hessam.newsapiclient.domain.repository.NewsRepository
 class GetNewsHeadlinesUseCase(private val newsRepository: NewsRepository) {
 
 
-    suspend fun exceute(): Resource<APIResponse> {
-        return newsRepository.getNewsHeadlines()
+    suspend fun exceute(country: String, page: Int): Resource<APIResponse> {
+        return newsRepository.getNewsHeadlines(country, page)
     }
 }
