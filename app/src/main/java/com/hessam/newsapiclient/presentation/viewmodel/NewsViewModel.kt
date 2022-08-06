@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val app: Application,
-    val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase): AndroidViewModel(app) {
+    private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase): AndroidViewModel(app) {
 
     val newsHeadlines : MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
