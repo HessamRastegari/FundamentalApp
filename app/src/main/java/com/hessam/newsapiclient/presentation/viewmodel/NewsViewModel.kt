@@ -12,12 +12,15 @@ import androidx.lifecycle.viewModelScope
 import com.hessam.newsapiclient.data.model.APIResponse
 import com.hessam.newsapiclient.data.util.Resource
 import com.hessam.newsapiclient.domain.usecase.GetNewsHeadlinesUseCase
+import com.hessam.newsapiclient.domain.usecase.GetSearchedNewsUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val app: Application,
-    private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase): AndroidViewModel(app) {
+    private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
+    private val getSearchedNewsUseCase: GetSearchedNewsUseCase): AndroidViewModel(app) {
 
     val newsHeadlines : MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
@@ -59,5 +62,31 @@ class NewsViewModel(
         return false
     }
 
+
+    //search
+    val searchedNews: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
+
+
+    fun searchNews(
+        country: String,
+        seachQuery: String,
+        page: Int
+    ) = viewModelScope.launch {
+        searchedNews.postValue(Resource.Loading())
+        try {
+            if (isNetworkAvailable(app)) {
+                val response = getSearchedNewsUseCase.exceute(
+                    country,
+                    seachQuery,
+                    page
+                )
+                searchedNews.postValue(response)
+            } else {
+                searchedNews.postValue(Resource.Error("No Internet connection"))
+            }
+        }catch (e:Exception){
+            searchedNews.postValue(Resource.Error(e.message.toString()))
+        }
+    }
 
 }
