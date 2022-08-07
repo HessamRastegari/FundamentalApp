@@ -2,6 +2,7 @@ package com.hessam.newsapiclient.data.repository
 
 import com.hessam.newsapiclient.data.model.APIResponse
 import com.hessam.newsapiclient.data.model.Article
+import com.hessam.newsapiclient.data.repository.dataSource.NewsLocalDataSource
 import com.hessam.newsapiclient.data.repository.dataSource.NewsRemoteDataSource
 import com.hessam.newsapiclient.data.util.Resource
 import com.hessam.newsapiclient.domain.repository.NewsRepository
@@ -9,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class NewsRepositoryImpl(
-    private val newsRemoteDataSource: NewsRemoteDataSource
+    private val newsRemoteDataSource: NewsRemoteDataSource,
+    private val newsLocalDataSource: NewsLocalDataSource
 ):NewsRepository {
     override suspend fun getNewsHeadlines(country: String, page: Int): Resource<APIResponse> {
         return responseToResource(newsRemoteDataSource.getTopHeadLines(country, page))
@@ -37,7 +39,7 @@ class NewsRepositoryImpl(
 
 
     override suspend fun saveNews(article: Article) {
-        TODO("Not yet implemented")
+        newsLocalDataSource.saveArticleToDB(article)
     }
 
     override suspend fun deleteNews(article: Article) {

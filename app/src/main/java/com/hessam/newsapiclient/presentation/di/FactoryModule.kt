@@ -3,6 +3,7 @@ package com.hessam.newsapiclient.presentation.di
 import android.app.Application
 import com.hessam.newsapiclient.domain.usecase.GetNewsHeadlinesUseCase
 import com.hessam.newsapiclient.domain.usecase.GetSearchedNewsUseCase
+import com.hessam.newsapiclient.domain.usecase.SaveNewsUseCase
 import com.hessam.newsapiclient.presentation.viewmodel.NewsViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -19,12 +20,14 @@ class FactoryModule {
     fun provideNewsViewModelFactory(
         application: Application,
         getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
-        getSearchedNewsUseCase: GetSearchedNewsUseCase
+        getSearchedNewsUseCase: GetSearchedNewsUseCase,
+        saveNewsUseCase: SaveNewsUseCase
     ): NewsViewModelFactory {
         return NewsViewModelFactory(
             application,
             getNewsHeadlinesUseCase,
-            getSearchedNewsUseCase
+            getSearchedNewsUseCase,
+            saveNewsUseCase
         )
     }
 }

@@ -3,6 +3,7 @@ package com.hessam.newsapiclient.presentation.di
 import com.hessam.newsapiclient.domain.repository.NewsRepository
 import com.hessam.newsapiclient.domain.usecase.GetNewsHeadlinesUseCase
 import com.hessam.newsapiclient.domain.usecase.GetSearchedNewsUseCase
+import com.hessam.newsapiclient.domain.usecase.SaveNewsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,13 @@ class UseCaseModule {
         newsRepository: NewsRepository
     ): GetSearchedNewsUseCase{
         return GetSearchedNewsUseCase(newsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveNewsUseCase(
+        newsRepository: NewsRepository
+    ): SaveNewsUseCase{
+        return SaveNewsUseCase(newsRepository)
     }
 }
