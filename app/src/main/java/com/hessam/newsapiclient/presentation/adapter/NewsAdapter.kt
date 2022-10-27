@@ -46,7 +46,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     }
 
 
-    inner class NewsViewHolder(val binding: NewsListItemBinding) :
+    inner class NewsViewHolder(private val binding: NewsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             Log.i("MYTAG", "came here ${article.title}")
